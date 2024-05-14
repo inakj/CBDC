@@ -3,11 +3,9 @@ CBDC -  Concrete Beam design checker is a Python tool to control capacity for a 
 
 All scripts are listed and explained below.
 
-# A0_Input
-Contain the class called 'Input'
-All input for the script is given here by the user.
-All values with a comment are where your input should be. Do not change the code or write something where there is no comments.
-Returns:
+## A0_Input
+Contain the class called 'Input'. All input for the script is given here by the user.All values with a comment are where your input should be. Do not change the code or write something where there is no comments.
+#### Returns:
         - Material -
         concrete_class(str):  concrete class, characteristic strength of concrete 
         steel_class(str):  steel class, characteristic strenght of steel
@@ -37,15 +35,14 @@ Returns:
         - Prestress and ordinary -
         prestressed_and_ordinary_in_top(bool):  True or False
 
-# A0_Results
-This script contain the Beam class that takes inn all other classes, makes instances of them and then control the relevant attributes regarding ULS and SLS.
-First the script import all classes from their respective scripts. Then the the beam class is made with the input from the Input script. This class give out instances based on how the beam is reinforced.
+## A0_Results
+This script contain the Beam class that takes inn all other classes, makes instances of them and then control the relevant attributes regarding ULS and SLS. First the script import all classes from their respective scripts. Then the the beam class is made with the input from the Input script. This class give out instances based on how the beam is reinforced.
 The script use if-else sentences to differentiate between ordinary reinforced, prestressed, or both.
 At the end of the script, the results of the ULS and SLS checks are printed based on the results from the Beam class.
 
-Args:
+#### Args:
             Input:  Instance with all input defined by the user in the Input script
-Returns:
+#### Returns:
             material_instance:  Instance for the material based on the inputs  
             cross_section_instance:   Instance for the cross section based on the inputs  
             load_instance:   Instance for the load based on the inputs  
@@ -77,9 +74,9 @@ Returns:
             total_cost(float):  Total cost based on the inputs [NOK]
             printed_cost(str):  Printed total cost
             
-# B0_Creep_number
+## B0_Creep_number
 This script contain the Creep number class that apply for all reinforcement cases. Class that contain creep number calculation from EC2, annex B.
-Args: 
+#### Args: 
             cross_section:  instance from Cross section class that contain all cross section properties
             material:  instance from the Material class that conatin all material properties
             t0_self(int):  time of applied self load, from Input class  [days]
@@ -87,7 +84,7 @@ Args:
             RH(int):  relative humidity, from Input class [%]
             cement_class(string):  cement class 'N','S' or 'R', from Input class 
             t(int):  concrete age at the considered time, assumed 50 years [days]
-Returns: 
+#### Returns: 
             h0(float): effective cross section thickness [mm]
             beta_fcm(float):  factor that takes into account concrete strength 
             phi_RH(float):  factor that takes into account the effect of relative humidity 
@@ -101,10 +98,10 @@ Returns:
             phi_self(float):  creep number for selfload
             phi_live(float):  creep number for liveload
             
-# B0_Cross_section
+## B0_Cross_section
 This script contain the Cross section class that apply for all reinforcement cases. Class to contain cross section properties used in calculations.
 All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2).
-Args:
+#### Args:
             width(float):  width of cross-section, from Input class [mm]
             height(float):  height of cross-section, from Input class [mm]
             nr_bars(int):  numbers of reinforcement bars in longitudinal direction,from Input class 
@@ -114,7 +111,7 @@ Args:
             prestress_diameter(float):  diameter of one prestressing strand, from Input class [mm2]
             nr_prestressed_bars(int):  number of prestressed reinforcement bars, from Input class 
             material:  instance from Material class that contain all material properties
-Returns:
+#### Returns:
             width(float):  width of cross-section as attribute[mm]
             height(float):  height of cross-section as attribute [mm]
             Ac(float):  concrete area [mm2]
@@ -128,16 +125,15 @@ Returns:
             e(float):  distance from bottom to middle of prestressed reinforcement [mm]
             Ap(float):  prestressed reinforcement area in cross section [mm2]    
             
-# B0_Load
-This script contain the Load properties class that apply for all reinforcement cases. Load class to contain load properties used in calculations. 
-All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2).
-Args:
+## B0_Load
+This script contain the Load properties class that apply for all reinforcement cases. Load class to contain load properties used in calculations. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2).
+#### Args:
             selfload(float):  concrete beam's self weight, from Input class [kN/m]
             liveload(float):  applied load, from Input class [kN/m]
             length(float):  length of beam, from Input class [m]
             material:  instance from Material class that contain all material properties
             cross_section:  instance from Cross section class that contain all cross section properties
-Returns: 
+#### Returns: 
             g_k(float):  characteristic selfload [kN/m]
             p_k(float):  characteristic liveload [kN/m]
             q_k(float):  characteristic load [kN/m]
@@ -156,15 +152,15 @@ Returns:
             P0_d(float):   design value of prestressign force [N]
             M_prestress(float):  moment because of prestressing force included loss [kNm]
 
-# B0_Material
+## B0_Material
 This script contain the Material class that apply for all reinforcement cases. Material class to contain material properties used in calculations.
 All calculations are done according to the standards NS-EN 1992-1-1:2004 (abbreviated to EC2), NS-EN 1990:2002 and EN10138-3.
-Args:
+#### Args:
             concrete_class (str): concrete class, from Input class 
             steel_class (str): steel class, from Input class 
             prestress_name (str): name of prestress type, from Input class , according to table 2 in EN10138-3
             prestress_diameter (float): diameter of prestressed reinforcement, from Input class , according to table 2 in EN10138-3
-Returns:
+#### Returns:
             - Load- and materialfactor attributes -
             gamma_shrinkage(float):  loadfactor for shrink
             gamma_0_9(float):  loadfactor for prestressing
@@ -210,21 +206,21 @@ Returns:
             fp01k(float):  characteristic 0.1% proof stress [N/mm2] 
             fpd(float):  design 0.1% proof stress [N/mm2] 
             
-# C1_ULS
+## C1_ULS
 This script contain the ULS class that apply for ordinary reinforced cross section.
 Class to contain all relevant ultimate limit state (ULS) controls. 
-Calculations are based on following assumptions from EC2 6.1(2)P:
+##### Calculations are based on following assumptions from EC2 6.1(2)P:
     - Full bond between concrete and reinforcement
     - Naviers hypothesis
     - Stress-strain properties from EC 3.1.7, figure 3.5
     - Ignore concrete tension strength 
 Assumed that the ultimate failure criterion is compression failure in concrete. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Sørensen. 
-Args:
+#### Args:
             cross_section:  instance for Cross sectino class that contain all cross-section properties
             material:  instance for Caterial class that contain all material properties
             load:  instance for Load properties class that contain all load properties
             Asw(float):  area of shear reinforcement, from Input class  [mm2/mm] 
-Returns:
+#### Returns:
             alpha(float):  Compression-zone-height factor
             M_Rd(float):  Moment capacity of beam [kNm]
             V_Rd(float):  Shear force capacity of beam [kNm]
@@ -233,15 +229,15 @@ Returns:
             M_utilization(float):  utilization degree for moment capacity [%]
             V_utilization(float):  utilization degree for shear capacity [%]
 
-# C2_ULS
+## C2_ULS
 This script contain the ULS class that apply for prestressed reinforced cross section. Class to contain all relevant ultimate limit state (ULS) controls for prestressed cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Sørensen. 
-Args:
+#### Args:
             material:  instance for Material class that contain all material properties
             load:  instance for Load properties class that contain all load properties
             cross_section:  instance for Cross section class that contain all cross-section properties
             time_effect:  instance for Time effect class that contain all time effect losses
             Asw(float):  area of shear reinforcement, from Input class  [mm2/mm] 
-Returns:
+#### Returns:
             eps_diff(float):  effective change differance beacuse of strain loss 
             alpha(float):  Compression-zone-height factor
             M_Rd(float):  moment capacity [kNm]
@@ -251,15 +247,15 @@ Returns:
             M_utilization(float):  utilization degree for moment capacity [%]
             V_utilization(float):  utilization degree for shear capacity [%]
 
-# C3_ULS
+## C3_ULS
 This script contain the ULS class that apply for prestressed reinforced cross section with ordinary reinforcement in top. Class to contain all relevant ultimate limit state (ULS) controls for prestressed cross section with ordinary reinforcement in top. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Sørensen. 
-Args:
+#### Args:
             material:  instance for Material class that contain all material properties
             load:  instance for Load properties class that contain all load properties
             cross_section:  instance for Cross section class that contain all cross-section properties
             time_effect:  instance for Time effect class that contain all time effect losses
             Asw(float):  area of shear reinforcement, from Input class  [mm2/mm] 
-Returns:
+#### Returns:
             eps_diff(float):  effective change differance beacuse of strain loss 
             alpha(float):  Compression-zone-height factor
             M_Rd(float):  moment capacity [kNm]
@@ -269,15 +265,15 @@ Returns:
             M_utilization(float):  utilization degree for moment capacity [%]
             V_utilization(float):  utilization degree for shear capacity [%]
 
-# D1_Reinforcement
+## D1_Reinforcement
 This script contain the reinforcement classs that apply for ordinary reinforced cross section. Class to contain all reinforcement controls for ordinary reinforced cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args: 
+#### Args: 
             cross_section:  instance for Cross sectino class that contain all cross-section properties
             material:  instance for Caterial class that contain all material properties
             load:  instance for Load properties class that contain all load properties
             ULS_nonprestressed:  instance for ULS class that contain all ULS control for ordinary reinforcement
             Asw(float):  area of shear reinforcement, from Input class  [mm2/mm] 
-Returns: 
+#### Returns: 
             As_necessary(float):  Necessary reinforcement [mm2]
             As(float):  Minimum reinforcement [mm2]
             As_max(float):  Maximum reinforcement [mm2]
@@ -286,15 +282,15 @@ Returns:
             utilization:  utilization degree for reinforcement [%]
             utilization_shear:  utilization degree for shear reinforcement [%]
 
-# D2_Reinforcement
+## D2_Reinforcement
 This script contain the reinforcement classs that apply for prestressed reinforced cross section. Class to contain all reinforcement controls for prestressed cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args: 
+#### Args: 
             cross_section:  instance for Cross sectino class that contain all cross-section properties
             material:  instance for Caterial class that contain all material properties
             load:  instance for Load properties class that contain all load properties
             ULS_prestressed:  instance for ULS prestressed class that contain all ULS control for prestressed reinforcement
             Asw(float):  area of shear reinforcement, from Input class  [mm2/mm] 
-Returns: 
+#### Returns: 
             As(float):  Minimum reinforcement [mm2]
             Asw_control(boolean):  Control of shear reinforcement, return True or False
             Ap_necessary(float):  area of prestress reinforcement necessary [mm2]
@@ -302,16 +298,16 @@ Returns:
             utilization:  utilization degree for reinforcement [%]
             utilization_shear:  utilization degree for shear reinforcement [%]
   
-# E1_SLS_Crack
+## E1_SLS_Crack
 This script contain the Crack control class that apply for ordinary reinforced cross section. Class to contain crack control in Service limit state (SLS) for ordinary reinforced cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args:
+#### Args:
             cross_section:  instance for Cross sectino class that contain all cross-section properties
             load:  instance for Load properties class that contain all load properties
             material:  instance for Material class that contain all material properties
             exposure_class(string):  exposure class to calculate nominal thickness, from Input class
             creep_number:  instance for Creep number class that contain creep number 
             bar_diameter(float):  rebar diameter, from Input class [mm]
-Returns: 
+#### Returns: 
             k_c(float):  factor that take into consideration the ratio between cnom and cmin,dur
             crack_width(float):  limit value of crack width [mm]
             alpha(float):  factor for calculating reinforcment stress
@@ -319,16 +315,16 @@ Returns:
             max_bar_diameter(float):  maximum bar diameter to limit crack width [mm
             control_bar_diameter(boolean):  control of bar diameter, return True or False
 
-# E2_SLS_Crack
+## E2_SLS_Crack
 This script contain the Crack control class that apply for prestressed reinforced cross section. Class to contain crack control in Service limit state (SLS) for prestressed cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen. 
-Args:
+#### Args:
             cross_section:  instance for Cross sectino class that contain all cross-section properties
             load:  instance for Load properties class that contain all load properties
             material:  instance for Material class that contain all material properties
             exposure_class(string):  exposure class to calculate nominal thickness, from Input class
             stress:  instance for Stress class that contain stress in cross section
             prestress_bar_diameter(float):  diameter of prestressed rebar, from Input class[mm]
-Returns: 
+#### Returns: 
             k_c(float):  factor that take into consideration the ratio between cnom and cmin,dur
             crack_width(float):  limit value of crack width [mm]
             alpha(float):  factor for calculating reinforcment stress
@@ -336,9 +332,9 @@ Returns:
             max_bar_diameter(float):  maximum bar diameter to limit crack width [mm]
             control_bar_diameter(boolean):  control of bar diameter, return True or False
 
-# F1_SLS_Deflection
+## F1_SLS_Deflection
 This script contain the Deflection class that apply for ordinary reinforced cross section. Class to contain deformation for ordinary reinforced cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args:
+#### Args:
             cross_section:  instance from Cross section class that contain all cross-section properties
             material:  instance from Material class that contain all material properties
             load:  instance from Load properties class that contain all load properties
@@ -347,7 +343,7 @@ Args:
             length(float):  length of beam, from Input class [m]
             RH(int):  relative humidity, from Input class [%]
             cement_class(str):  cement class 'N','S' or 'R', from Input class
-Returns:
+#### Returns:
             Ec_middle(float):  middle elasticity modulus [N/mm2]
             netta(float):  factor to calculate alpha
             ro(float):  factor to calculate alpha
@@ -368,10 +364,10 @@ Returns:
             control_deflection(boolean):  Return true if the deflection is within the limit, and False
             if the deflection is to big
         
-# F2_SLS_Deflection
+## F2_SLS_Deflection
 This script contain the Deflection class that apply for prestressed reinforced cross section. Class to contain deformation for prestressed cross section.
 All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen. 
-Args:
+#### Args:
             cross_section:  instance from Cross section class that contain all cross-section properties
             material:  instance from Material class that contain all material properties
             load:  instance from Load properties class that contain all load properties
@@ -381,7 +377,7 @@ Args:
             RH(int):  relative humidity, from Input class [%]
             cement_class(str):  cement class 'N','S' or 'R', from Input class
             time_effect:  instance from Time effects class that contain all time dependant losses
-Returns:
+#### Returns:
             Ec_middle(float):  middle elasticity modulus [N/mm2]
             netta(float):  factor to calculate alpha
             ro(float):  factor to calculate alpha
@@ -402,17 +398,17 @@ Returns:
             control_deflection(boolean):  Return true if the deflection is within the limit, and False
             if the deflection is to big
             
-# G2_SLS_Cracked
+## G2_SLS_Cracked
 This script contain the Cracked stress class that apply for prestressed reinforced cross section.
 Class to contain calculation of cracked prestressed cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args:
+#### Args:
             cross_section:  instance from Cross section class that contain all cross-section properties
             material:  instance from Material class that contain all material properties
             load:  instance from Load properties class that contain all load properties 
             deflection:  instance from Deflection prestressed class that contain deflection control 
             time_effect:  instance from Time effect class that contain time effects because of shrink, creep and relaxation
             creep_number:  instance from Creep number class that contain creep number calculations
-Returns:    
+#### Returns:    
             E_middle(float):  middle elasticity modulus [N/mm2]
             netta(float):  material stiffness ratio 
             ro(float):  Reinforcement ratio 
@@ -421,32 +417,32 @@ Returns:
             alpha(float):  factor for calculating stresses
             sigma_c(float):  stress in concrete top [N/mm2]
             
-# H2_SLS_Uncracked
+## H2_SLS_Uncracked
 This script contain the Uncracked stress class that apply for prestressed reinforced cross section.
 Class to contain calculation of uncracked prestressed
     cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the 
     book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args:
+#### Args:
             cross_section:  instance from Cross section class that contain all cross-section properties
             material:  instance from Material class that contain all material properties
             load:  instance from Load properties class that contain all load properties 
-Returns:    
+#### Returns:    
             netta(float):  material stiffness ratio 
             At(float):  transformed cross section area [mm2]
             yt(float):  distance between reinforced gravity axis and concrete gravity axis [mm]
             It(float):  moment of inertia for tranforsmed cross section [mm4]
             sigma_c_uncracked(float):  concrete stress for uncracked cross section [N/mm2]
         
-# H3_SLS_Uncracked
+## H3_SLS_Uncracked
 This script contain the Uncracked stress class that apply for prestressed and ordinary reinforced cross section. Class to contain calculation of uncracked prestressed and ordinary reinforced cross section. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the 
 book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args:
+#### Args:
             cross_section:  instance from Cross section class that contain all cross-section properties
             material:  instance from Material class that contain all material properties
             load:  instance from Load properties class that contain all load properties 
             stirrup_diameter(float):  diameter of stirrup around the longitudinal bars [mm]  
             bar_diameter(float):  diameter of ordinary reinforcement bars in longitudinal direction [mm]
-Returns:    
+#### Returns:    
             netta_p(float):  material stiffness ratio for prestressed reinforcement
             netta_s(float):  material stiffness ratio for ordinary reinforcement
             At(float):  transformed cross section area [mm2]
@@ -454,30 +450,30 @@ Returns:
             It(float):  moment of inertia for tranforsmed cross section [mm4]
             sigma_c_uncracked(float):  concrete stress for uncracked cross section [N/mm2]
 
-# I2_SLS_Stress
+## I2_SLS_Stress
 This script contain the Stress class that apply for prestressed reinforced cross section. Class to contain calculation stress calculation for prestressed cross section. Include calculations from both Uncracked and Cracked Stress Class. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args:
+#### Args:
             material:  instance for Material class that contain all material properties
             deflection:  instance for Deflection class that contain deflection control 
             uncracked_stress:  instance for Uncracked sress class that contain stress calculation for uncracked cross section
             cracked_stress:  instance for Cracked stress class that contain stress calculation for cracked cross section
             load:  instance for Load properties class that contain all load properties 
             time_effect:  instance for Time effects class that contain time effects because of shrink, creep and relaxation
-Returns:    
+#### Returns:    
             sigma_p_uncracked(float):  reinforcement stress for uncracked cross section [N/mm2]
             sigma_p_cracked(float):  reinforcement stress for cracked cross section [N/mm2]
             control(bool):  control of concrete stress, return True or False
             
-# J2_Time_Effects
+## J2_Time_Effects
 This script contain the Time effects class that apply for prestressed reinforced cross section. Class to contain losses that is caused by time, including shrink, creep and relaxation. All calculations are done according to the standard NS-EN 1992-1-1:2004 (abbreviated to EC2) and the book "Betongkonstruksjoner; beregning og dimensjonering etter Eurocode 2" by Svein Ivar Sørensen.
-Args:
+#### Args:
             material:  instance from Material class that contain all material properties
             cross_section:  instance from Cross section class that contain all cross-section properties
             creep_number:  instance from Creep number class that contain creep number calculation
             Stress_uncracked:  instance from Uncracked stress class that contain control of prestressed uncracked cross section
             deflection:  instance from Deflection class that contain all calculations for deflection
             load:  instance from Load properties class that contain all load properties 
-Returns:
+#### Returns:
             delta_relaxation(float):  loss in stress because of relaxation [N/mm2]
             loss(float):  stress reduction in prestress because for relaxation, shrink and creep [N/mm2]
             loss_percentage(float):  stress reduction in prestress because for relaxation, shrink and creep [%]
