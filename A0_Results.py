@@ -65,7 +65,7 @@ class Beam:
             total_emission(float):  Total emissions based on the inputs [kg CO2 eq.]
             printed_emission(str):  Printed total emission 
             cost_concrete(float):  Concrete cost based on the inputs [NOK]
-            cost_reinforcement(float):  Reinforcement cost bast on the inputs [NOK]
+            cost_reinforcement(float):  Reinforcement cost based on the inputs [NOK]
             total_cost(float):  Total cost based on the inputs [NOK]
             printed_cost(str):  Printed total cost
             
