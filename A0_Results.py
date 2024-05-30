@@ -92,11 +92,11 @@ class Beam:
                 
                 self.prestressed_and_ordinary_in_top = False
                 self.is_the_beam_prestressed = True
+                self.stress_uncracked_instance = Uncracked_stress(self.material_instance, self.cross_section_instance, self.load_instance)
+                self.time_effect_instance = time_effects(self.material_instance, self.cross_section_instance, self.creep_instance, self.stress_uncracked_instance, self.deflection_instance_1, self.load_instance)
                 self.deflection_instance = Deflection_prestressed(self.cross_section_instance, self.material_instance, self.load_instance, self.creep_instance, input.percent_longlasting_liveload,
                                                                   input.beam_length, input.relative_humidity, input.cement_class, self.time_effect_instance)
                 self.stress_cracked_instance = Cracked_Stress(self.material_instance, self.cross_section_instance, self.load_instance, self.deflection_instance, self.time_effect_instance, self.creep_instance)
-                self.stress_uncracked_instance = Uncracked_stress(self.material_instance, self.cross_section_instance, self.load_instance)
-                self.time_effect_instance = time_effects(self.material_instance, self.cross_section_instance, self.creep_instance, self.stress_uncracked_instance, self.deflection_instance_1, self.load_instance)
                 self.stress_instance = Stress(self.material_instance, self.deflection_instance, self.stress_uncracked_instance, self.stress_cracked_instance, self.load_instance, self.time_effect_instance)
                 self.ULS_instance = ULS_prestressed(self.material_instance, self.load_instance, self.cross_section_instance, self.time_effect_instance, input.shear_reinforcement)
                 self.crack_instance = Crack_control_prestressed(self.cross_section_instance, self.load_instance, self.material_instance, input.exposure_class, self.stress_instance, input.ordinary_reinforcement_diameter)
@@ -122,7 +122,7 @@ class Beam:
                 
                 self.is_the_beam_prestressed = True
                 self.prestressed_and_ordinary_in_top = True
-                self.stress_uncracked_instance = Uncracked_stress_prestress_and_ordinary(self.material_instance, self.cross_section_instance, self.load_instance,input.stirrup_diameter,input.ordinary_reinforcement_diameter)
+                self.stress_uncracked_instance = Uncracked_stress_prestress_and_ordinary(self.material_instance, self.cross_section_instance, self.load_instance,input.shear_reinforcement_diameter,input.ordinary_reinforcement_diameter)
                 self.time_effect_instance = time_effects(self.material_instance, self.cross_section_instance, self.creep_instance, self.stress_uncracked_instance, self.deflection_instance_1, self.load_instance)
                 self.ULS_instance = ULS_prestress_and_ordinary(self.material_instance, self.load_instance, self.cross_section_instance, self.time_effect_instance, input.shear_reinforcement)
                 self.M_control = self.control_M(self.ULS_instance)
@@ -157,6 +157,7 @@ class Beam:
             self.cost_reinforcement = self.get_cost_ordinary_reinforcement(input, self.cross_section_instance, 7700)
             self.total_cost = round(self.cost_concrete + self.cost_reinforcement, 1)
             self.printed_cost = f'Total cost is {self.total_cost} NOK'
+
 
 
     def control_M(self, ULS):
