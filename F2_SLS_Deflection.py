@@ -66,7 +66,7 @@ class Deflection_prestressed:
         self.deflection_shrinkage = self.calculate_deflection_shrinkage(self.K_s, length)
         self.total_deflection = self.calculate_deflection_tension_stiffening(self.M_cr, load.M_Ed, self.control_Mcr, self.deflection_shrinkage, self.deflection_cracked, self.deflection_uncracked)
         self.control = self.control_deflection(length, self.total_deflection)
-        self.utilization = self.calculate_utilization_degree(self.total_deflection)
+        self.safety = self.calculate_safety_degree(self.total_deflection)
 
 
     def calculate_Ec_middle(self, Ecm: int, phi_selfload: float, phi_liveload: float,
@@ -403,13 +403,13 @@ class Deflection_prestressed:
         else: 
             return False
         
-    def calculate_utilization_degree(self, total_deflection: float) -> float:
-        ''' Function that calculates the utilization degree for the deflection
+    def calculate_safety_degree(self, total_deflection: float) -> float:
+        ''' Function that calculates the safety degree for the deflection
         Args:
             total_deflection(float):  deflection including both shrinkage and creep [mm]
         Returns: 
-            utilization(float):  utilization degree for the deflection [%]
+            safety(float):  safety degree for the deflection [%]
 
         '''
-        utilization = ( self.max_deflection / total_deflection ) * 100
-        return round(utilization,1)
+        safety = ( self.max_deflection / total_deflection ) * 100
+        return round(safety,1)
