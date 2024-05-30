@@ -21,15 +21,15 @@ class Reinforcement_control_prestressed:
             Asw_control(boolean):  Control of shear reinforcement, return True or False
             Ap_necessary(float):  area of prestress reinforcement necessary [mm2]
             A_control(boolean):  Control of prestress reinforcement area, return True or False
-            utilization:  utilization degree for reinforcement [%]
-            utilization_shear:  utilization degree for shear reinforcement [%]
+            safety:  safety degree for reinforcement [%]
+            safety_shear:  safety degree for shear reinforcement [%]
         '''
         self.As = self.calculate_As_min(material.fctm, material.fyk, cross_section.width, cross_section.d_2)
         self.Asw_control = self.control_reinforcement_shear(material.fck, material.fyk, cross_section.width, Asw)
         self.Ap_necessary= self.calculate_prestress_reinforcement(load.M_Ed, cross_section.d_2, material.fpd, material.lambda_factor, ULS_prestressed.alpha)
         self.control = self.control_prestress_reinforcement(self.Ap_necessary, cross_section.Ap)
-        self.utilization = self.calculate_utilization_degree_Ap(self.Ap_necessary, cross_section.Ap)
-        self.utilization_shear = self.calculate_utilization_degree_Asw(Asw)
+        self.safety = self.calculate_safety_degree_Ap(self.Ap_necessary, cross_section.Ap)
+        self.safety_shear = self.calculate_safety_degree_Asw(Asw)
 
 
     def calculate_As_min(self, fctm: float, fyk: int, width: float, d: float) -> float:
@@ -97,23 +97,23 @@ class Reinforcement_control_prestressed:
         else:
             return False
 
-    def calculate_utilization_degree_Ap(self, Ap_necessary: float, Ap: float) -> float:
-        ''' Calculate utilization degree for prestressed reinforcement
+    def calculate_safety_degree_Ap(self, Ap_necessary: float, Ap: float) -> float:
+        ''' Calculate safety degree for prestressed reinforcement
         Args:
             Ap_necessary(float):  Necessary prestress reinforcement [mm2]
             Ap(float):  Area of prestress reinforcement, from Cross sectino class [mm2]
         Returns:
-            Utilization(float):  utilization degree for prestressed reinforcement [%]
+            safety(float):  safety degree for prestressed reinforcement [%]
         '''
-        utilization = (Ap / Ap_necessary) * 100 
-        return round(utilization,1)
+        safety = (Ap / Ap_necessary) * 100 
+        return round(safety,1)
     
-    def calculate_utilization_degree_Asw(self, Asw: float) -> float: 
-        ''' Calculate utilization degree for shear reinforcement
+    def calculate_safety_degree_Asw(self, Asw: float) -> float: 
+        ''' Calculate safety degree for shear reinforcement
         Args:
             Asw(float):  area of shear reinforcement per meter, from Inut class [mm2/mm] 
         Returns:
-            Utilization(float):  utilization degree for shear reinforcement [%]
+            safety(float):  safety degree for shear reinforcement [%]
         '''
-        utilization = (Asw / self.Asw_min) * 100 
-        return round(utilization,1)
+        safety = (Asw / self.Asw_min) * 100 
+        return round(safety,1)
