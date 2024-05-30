@@ -33,7 +33,7 @@ class Crack_control:
         self.sigma_s = self.calculate_reinforcement_stress(self.alpha, cross_section.width, cross_section.d_1, load.M_Ed, self.Ec_middle, material.Es, cross_section.As)
         self.max_bar_diameter  = self.calculate_maximal_bar_diameter(self.crack_width, self.sigma_s)
         self.control_bar_diameter = self.control_of_bar_diameter(bar_diameter, self.max_bar_diameter)
-        self.utilization = self.calculate_utilization_degree(bar_diameter, self.max_bar_diameter)
+        self.safety = self.calculate_safety_degree(bar_diameter, self.max_bar_diameter)
         
     def calculate_kc(self, cnom: float, c_min_dur: float) -> float: 
         ''' Function that calculate the factor kc according to EC2 NA.7.3.1
@@ -184,18 +184,18 @@ class Crack_control:
         else: 
             return False
         
-    def calculate_utilization_degree(self, bar_diameter: float, max_bar_diameter: float) -> float:
-        ''' Calculates the utilization degree for the maximum bar diameter, based on the limit of crack width
+    def calculate_safety_degree(self, bar_diameter: float, max_bar_diameter: float) -> float:
+        ''' Calculates the safety degree for the maximum bar diameter, based on the limit of crack width
         Args:
             max_bar_diameter(float):  maximum bar diameter to limit crack width [mm]
             bar_diameter(float):  reinforcement diameter, from Input class [mm]
         Returns:
-            utilization(float):  utilization degree for the maximum bar diameter [%], or a printed error
+            safety(float):  safety degree for the maximum bar diameter [%], or a printed error
         '''
         if max_bar_diameter == None:
-            return None#(f'the stress is bigger that the maximum, and the crack utilization could not be executed')
+            return None#(f'the stress is bigger that the maximum, and the crack safety could not be executed')
         else:
-            utilization = (max_bar_diameter / bar_diameter) * 100
-            return round(utilization,1)
+            safety = (max_bar_diameter / bar_diameter) * 100
+            return round(safety,1)
         
     
