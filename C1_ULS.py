@@ -27,8 +27,8 @@ class ULS:
             V_Rd(float):  Shear force capacity of beam [kNm]
             M_control(bool):  Control of moment capacity, return True or False 
             V_control(bool):  Control of shear force capacity, return True or False 
-            M_utilization(float):  utilization degree for moment capacity [%]
-            V_utilization(float):  utilization degree for shear capacity [%]
+            M_safety(float):  safety degree for moment capacity [%]
+            V_safety(float):  safety degree for shear capacity [%]
         
         '''
         self.alpha = self.calculate_alpha(material.eps_cu3, material.eps_yd, cross_section.As,
@@ -37,8 +37,8 @@ class ULS:
         self.V_Rd = self.calculate_V_Rd(cross_section.d_1, cross_section.As, cross_section.width, material.fcd, material.gamma_concrete, material.fck) 
         self.M_control = self.control_of_M_cap(self.M_Rd, load.M_Ed)
         self.V_control = self.control_of_V_cap(self.V_Rd, load.V_Ed, Asw, cross_section.d_1, material.fyd, material.fcd, cross_section.width, material.fck)
-        self.M_utilization = self.calculate_utilization_M(self.M_Rd, load.M_Ed)
-        self.V_utilization = self.calculate_utilization_V(self.V_Rd, load.V_Ed)
+        self.M_safety = self.calculate_safety_M(self.M_Rd, load.M_Ed)
+        self.V_safety = self.calculate_safety_V(self.V_Rd, load.V_Ed)
     
     def calculate_alpha(self, eps_cu3: float, eps_yd: float, As: float, Es: float, fcd: float,
                         width: float, d: float, fyd: float, lambda_factor: float, netta: float) -> float:
@@ -168,29 +168,29 @@ class ULS:
             else:
                 return False
     
-    def calculate_utilization_M(self, M_Rd: float, M_Ed: float) -> float:
-        ''' Calculation of utilization degree for moment capacity.
+    def calculate_safety_M(self, M_Rd: float, M_Ed: float) -> float:
+        ''' Calculation of safety degree for moment capacity.
         Args:
             M_Rd(float):  Moment capacity [kNm]
             M_Ed(float):  Design moment, from Load properties class [kNm]
         Returns:
-            M_utilization(float):  utilization degree for moment capacity [%]
+            M_safety(float):  safety degree for moment capacity [%]
         '''
-        utilization = (M_Rd / M_Ed) * 100
-        return round(utilization,1)
+        safety = (M_Rd / M_Ed) * 100
+        return round(safety,1)
     
-    def calculate_utilization_V(self, V_Rd: float, V_Ed: float) -> float:
-        ''' Calculation utilization degree for shear capacity. Use the shear capacity V_Rds for calculation-based 
+    def calculate_safety_V(self, V_Rd: float, V_Ed: float) -> float:
+        ''' Calculation safety degree for shear capacity. Use the shear capacity V_Rds for calculation-based 
         need for shear reinforcement instead of the ordinary shear capacity if the capacity is not suifficent.
         Args: 
             V_Rd(float):  Shear capacity [kNm]
             V_Ed(float):  Design shear force, from Load properties class [kNm]
         Returns:
-            V_utilization(float):  utilization degree for shear capacity [%]
+            V_safety(float):  safety degree for shear capacity [%]
         '''
         if V_Rd < V_Ed:
-            utilization = (self.V_Rds / V_Ed) * 100
+            safety = (self.V_Rds / V_Ed) * 100
         else:
-            utilization = (V_Rd / V_Ed) * 100
-        return round(utilization,1)
+            safety = (V_Rd / V_Ed) * 100
+        return round(safety,1)
     
