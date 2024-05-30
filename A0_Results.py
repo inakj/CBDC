@@ -164,79 +164,79 @@ class Beam:
         Args:
             ULS:  Instance for the ULS calculations based on the inputs
         Returns:
-            A string sentence saying if the capacity is suifficient or not, and the utilization degree
+            A string sentence saying if the capacity is suifficient or not, and the safety degree
         '''
         if ULS.M_control == True:
-            return f'Moment capacity is suifficient and the utilization degree is {ULS.M_utilization} %'
+            return f'Moment capacity is suifficient and the safety degree is {ULS.M_safety} %'
         else:
-            return f'Moment capacity is not suifficient since utilization degree is {ULS.M_utilization} %'
+            return f'Moment capacity is not suifficient since safety degree is {ULS.M_safety} %'
         
     def control_V(self, ULS):
         '''Control of shear capacity for the beam
         Args:
             ULS:  Instance for the ULS calculations based on the inputs
         Returns:
-            A string sentence saying if the capacity is suifficient or not, and the utilization degree
+            A string sentence saying if the capacity is suifficient or not, and the safety degree
         '''
         if ULS.V_control == True:
-            return f'Shear capacity is suifficient and the utilization degree is {ULS.V_utilization} %'
+            return f'Shear capacity is suifficient and the safety degree is {ULS.V_safety} %'
         else:
-            return f'Shear capacity is not suifficient since the utilization degree is {ULS.V_utilization} %'
+            return f'Shear capacity is not suifficient since the safety degree is {ULS.V_safety} %'
         
     def control_As(self, reinforcement):
         '''Control of reinforcement area for the beam
         Args:
             reinforcement:  Instance for the reinforcment based on the inputs 
         Returns:
-            A string sentence saying if the reinforcement area is suifficient or not, and the utilization degree
+            A string sentence saying if the reinforcement area is suifficient or not, and the safety degree
         '''
         if reinforcement.control == True:
-            return f'Reinforcement area is suifficient and the utilization degree is {reinforcement.utilization} %'
+            return f'Reinforcement area is suifficient and the safety degree is {reinforcement.safety} %'
         else:
-            return f'Reinforcement area is not suifficient since the utilization degree is {reinforcement.utilization} %'
+            return f'Reinforcement area is not suifficient since the safety degree is {reinforcement.safety} %'
 
     def control_Asw(self, reinforcement):
         '''Control of shear reinforcement area for the beam
         Args:
             reinforcement:  Instance for the shear reinforcment based on the inputs 
         Returns:
-            A string sentence saying if the shear reinforcement area is suifficient or not, and the utilization degree
+            A string sentence saying if the shear reinforcement area is suifficient or not, and the safety degree
         '''
         if reinforcement.Asw_control == True:
-            return f'Shear reinforcement area is suifficient and the utilization degree is {reinforcement.utilization_shear} %'
+            return f'Shear reinforcement area is suifficient and the safety degree is {reinforcement.safety_shear} %'
         else:
-            return f'Shear reinforcement area is not suifficient since the utilization degree is {reinforcement.utilization_shear} %'
+            return f'Shear reinforcement area is not suifficient since the safety degree is {reinforcement.safety_shear} %'
 
     def control_crack(self, crack):
         '''Control of crack width for the beam
         Args:
             crack:  Instance for the crack width based on the inputs
         Returns:
-            A string sentence saying if the crack width is suifficient or not, and the utilization degree
+            A string sentence saying if the crack width is suifficient or not, and the safety degree
         '''
         if crack.control_bar_diameter == True:
-            return f'Crack width is suifficient and the utiliation degree is {crack.utilization} %'
+            return f'Crack width is suifficient and the utiliation degree is {crack.safety} %'
         else:
-            return f'Crack width is not suifficient since the utilization degree is {crack.utilization}'
+            return f'Crack width is not suifficient since the safety degree is {crack.safety}'
 
     def control_deflection(self, deflection):
         '''Control of deflection for the beam
         Args:
             deflection:  Instance for the deflection based on the inputs  
         Returns:
-            A string sentence saying if the deflection is suifficient or not, and the utilization degree
+            A string sentence saying if the deflection is suifficient or not, and the safety degree
         '''
         if deflection.control == True:
-            return f'Deflection is suifficient and the utilization degree is {deflection.utilization} %'
+            return f'Deflection is suifficient and the safety degree is {deflection.safety} %'
         else:
-            return f'Deflection is not suifficient since the utilization degree is {deflection.utilization} %'
+            return f'Deflection is not suifficient since the safety degree is {deflection.safety} %'
    
     def control_stress(self, stress):
         '''Control of stress for the prestressed beam
         Args:
             stress:  Instance for the stress for prestressed cross section based on the inputs
         Returns:
-            A string sentence saying if the stress is suifficient or not, and the utilization degree
+            A string sentence saying if the stress is suifficient or not, and the safety degree
         '''
         if stress.control == True:
             return f'Stress is suifficient'
