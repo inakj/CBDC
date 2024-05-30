@@ -23,16 +23,16 @@ class Reinforcement_control:
             As_max(float):  Maximum reinforcement [mm2]
             A_control(boolean):  Control of reinforcement, return True or False
             Asw_control(boolean):  Control of shear reinforcement, return True or False
-            utilization:  utilization degree for reinforcement [%]
-            utilization_shear:  utilization degree for shear reinforcement [%]
+            safety:  safety degree for reinforcement [%]
+            safety_shear:  safety degree for shear reinforcement [%]
         '''
         self.As_necessary = self.calculate_necessary_reinforcement(load.M_Ed, cross_section.d_1, material.fyd, material.lambda_factor, ULS_nonprestressed.alpha)
         self.As_min = self.calculate_As_min(material.fctm, material.fyk, cross_section.width, cross_section.d_1)
         self.As_max = self.calculate_As_max(cross_section.Ac)
         self.control = self.control_reinforcement(cross_section.As, self.As_necessary, self.As_max, self.As_min)
         self.Asw_control = self.control_reinforcement_shear(material.fck, material.fyk, cross_section.width, Asw)
-        self.utilization = self.calculate_utilization_degree_As(self.As_necessary, cross_section.As)
-        self.utilization_shear = self.calculate_utilization_degree_Asw(Asw)
+        self.safety = self.calculate_safety_degree_As(self.As_necessary, cross_section.As)
+        self.safety_shear = self.calculate_safety_degree_Asw(Asw)
 
 
         
@@ -117,26 +117,26 @@ class Reinforcement_control:
             return False
         
     
-    def calculate_utilization_degree_As(self, As_necessary: float, As: float) -> float:
-        ''' Calculate utilization degree for ordinary reinforcement
+    def calculate_safety_degree_As(self, As_necessary: float, As: float) -> float:
+        ''' Calculate safety degree for ordinary reinforcement
         Args:
             As_necessary(float):  Necessary ordinary reinforcement [mm2]
             As(float):  Area of reinforcement, from Cross section class [mm2]
         Returns:
-            Utilization(float):  utilization degree for ordinary reinforcement [%]
+            safety(float):  safety degree for ordinary reinforcement [%]
         '''
-        utilization = (As / As_necessary) * 100 
-        return round(utilization,1)
+        safety = (As / As_necessary) * 100 
+        return round(safety,1)
     
-    def calculate_utilization_degree_Asw(self, Asw: float) -> float:
-        ''' Calculate utilization degree for shear reinforcement
+    def calculate_safety_degree_Asw(self, Asw: float) -> float:
+        ''' Calculate safety degree for shear reinforcement
         Args:
             Asw(float):  area of shear reinforcement per meter, from Input class [mm2/mm] 
         Returns:
-            Utilization(float):  utilization degree for shear reinforcement [%]
+            safety(float):  safety degree for shear reinforcement [%]
         '''
-        utilization = (Asw / self.Asw_min) * 100 
-        return round(utilization,1)
+        safety = (Asw / self.Asw_min) * 100 
+        return round(safety,1)
 
 
 
