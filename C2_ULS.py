@@ -34,7 +34,7 @@ class ULS_prestressed:
         self.M_Rd = self.calculate_moment_capacity(self.alpha, material.fcd, cross_section.width, cross_section.d_2, material.lambda_factor, material.netta)
         self.M_control = self.control_moment(load.M_Ed, load.M_prestress, self.M_Rd)
         self.V_Rd = self.calc_shear_capacity(cross_section.d_2, cross_section.Ap, cross_section.width, cross_section.Ac, material.fcd, material.gamma_concrete,
-                                             material.fck, load.P0_d, material.gamma_0_9, time_effect.loss)
+                                             material.fck, load.P0_d, material.gamma_0_9, time_effect.loss_percentage)
         self.V_control = self.control_V(self.V_Rd, load.V_Ed, Asw, cross_section.d_2, material.fyd, material.fck, cross_section.width, material.fcd)
         self.M_safety = self.calculate_safety_M(self.M_Rd)
         self.V_safety = self.calculate_safety_V(self.V_Rd, load.V_Ed)
